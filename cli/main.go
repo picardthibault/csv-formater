@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"github.com/picardthibault/csv-formater/parser"
 )
 
 func main() {
@@ -15,4 +17,6 @@ func main() {
 
 	fmt.Println("inputParam:", inputArgs.InputParam)
 	fmt.Println("headerParam:", inputArgs.HeaderParam)
+
+	parser.ParseCsv(inputArgs.InputParam, inputArgs.HeaderParam)
 }

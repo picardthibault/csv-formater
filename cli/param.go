@@ -6,19 +6,19 @@ import (
 	"fmt"
 )
 
-type inputArgs struct {
+type InputArgs struct {
 	HeaderParam bool
 	InputParam  string
 }
 
-func ParseArgs() (inputArgs, error) {
+func ParseArgs() (InputArgs, error) {
 	args := parseCliArgs()
 	argsValidationResult := validateArgs(args)
 
 	return args, argsValidationResult
 }
 
-func parseCliArgs() inputArgs {
+func parseCliArgs() InputArgs {
 	headerParam := flag.Bool("header", false, "Indicates if the csv file to display has headers")
 	inputParam := flag.String("input", "", "The path of the csv file to display")
 
@@ -29,10 +29,10 @@ func parseCliArgs() inputArgs {
 
 	flag.Parse()
 
-	return inputArgs{*headerParam, *inputParam}
+	return InputArgs{*headerParam, *inputParam}
 }
 
-func validateArgs(args inputArgs) error {
+func validateArgs(args InputArgs) error {
 	inputParamErrors := isInputParamValid(args.InputParam)
 
 	if inputParamErrors != nil {
