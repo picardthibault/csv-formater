@@ -4,9 +4,9 @@ import (
 	"testing"
 )
 
-func TestIsInputParamValidWithEmptyString(t *testing.T) {
-	want := "--input option is mandatory"
-	err := isInputParamValid("")
+func TestIsFileFlagValidWithEmptyString(t *testing.T) {
+	want := "--file option is mandatory !"
+	err := isFileFlagValid("")
 	if err == nil {
 		t.Errorf(`isInputParamValid("") should return an error.`)
 		return
@@ -16,8 +16,8 @@ func TestIsInputParamValidWithEmptyString(t *testing.T) {
 	}
 }
 
-func TestIsInputParamValidWithDefinedString(t *testing.T) {
-	err := isInputParamValid("defined string")
+func TestIsFileFlagValidWithDefinedString(t *testing.T) {
+	err := isFileFlagValid("defined string")
 	if err != nil {
 		t.Errorf(`isInputParamValid("defined string") = "%v", want match for nil`, err)
 	}

@@ -8,15 +8,13 @@ import (
 )
 
 func main() {
-	inputArgs, inputValidationError := ParseArgs()
-
-	if inputValidationError != nil {
-		fmt.Println(inputValidationError)
+	inputs, err := ParseParams()
+	if err != nil {
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	fmt.Println("inputParam:", inputArgs.InputParam)
-	fmt.Println("headerParam:", inputArgs.HeaderParam)
-
-	parser.ParseCsv(inputArgs.InputParam, inputArgs.HeaderParam)
+	csv := parser.ParseCsv(inputs.File, inputs.Headers)
+	fmt.Println("header:", csv.Headers)
+	fmt.Println("data:", csv.Data)
 }

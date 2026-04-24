@@ -6,21 +6,21 @@ import (
 	"fmt"
 )
 
-type InputArgs struct {
-	HeaderParam bool
-	InputParam  string
+type Flags struct {
+	Headers bool
+	File    string
 }
 
-func ParseArgs() (InputArgs, error) {
-	args := parseCliArgs()
-	argsValidationResult := validateArgs(args)
+func ParseParams() (Flags, error) {
+	args := parseFlags()
+	err := isFlagValid(args)
 
-	return args, argsValidationResult
+	return args, err
 }
 
-func parseCliArgs() InputArgs {
-	headerParam := flag.Bool("header", false, "Indicates if the csv file to display has headers")
-	inputParam := flag.String("input", "", "The path of the csv file to display")
+func parseFlags() Flags {
+	headerFlag := flag.Bool("header", false, "Indicates if the csv file to display has headers")
+	fileFlag := flag.String("file", "", "The path of the csv file to display")
 
 	flag.Usage = func() {
 		fmt.Println("Usage: csv-formater [options]")
@@ -29,22 +29,21 @@ func parseCliArgs() InputArgs {
 
 	flag.Parse()
 
-	return InputArgs{*headerParam, *inputParam}
+	return Flags{*headerFlag, *fileFlag}
 }
 
-func validateArgs(args InputArgs) error {
-	inputParamErrors := isInputParamValid(args.InputParam)
-
-	if inputParamErrors != nil {
-		return inputParamErrors
+func isFlagValid(args Flags) error {
+	err := isFileFlagValid(args.File)
+	if err != nil {
+		return err
 	}
 
 	return nil
 }
 
-func isInputParamValid(input string) error {
-	if input == "" {
-		return errors.New("--input option is mandatory")
+func isFileFlagValid(file string) error {
+	if file == "" {
+		return errors.New("--file option is mandatory !")
 	}
 	return nil
 }

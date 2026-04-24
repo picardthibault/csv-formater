@@ -2,18 +2,26 @@ package parser
 
 import (
 	"encoding/csv"
-	"fmt"
 	"log"
 	"os"
 )
 
-func ParseCsv(filePath string, header bool) {
-	content := readCsvFile(filePath)
-
-	fmt.Print(content)
+type CSV struct {
+	Headers []string
+	Data    [][]string
 }
 
-func readCsvFile(filePath string) [][]string {
+func ParseCsv(filePath string, header bool) CSV {
+	content := readCsv(filePath)
+
+	if header {
+		return CSV{content[0], content[1:]}
+	} else {
+		return CSV{[]string{}, content}
+	}
+}
+
+func readCsv(filePath string) [][]string {
 	file, err := os.Open(filePath)
 	if err != nil {
 		log.Fatal(err)
